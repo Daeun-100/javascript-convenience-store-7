@@ -1,7 +1,7 @@
-import { PRODUCT_FORM } from "../Constants";
+import { PRODUCT_FORM } from "../Constants.js";
 export default function createProductForm([name, price, quantity, promotion]) {
   let productForm = {};
-  if (promotion === "null") {
+  if (promotion.includes("null")) {
     productForm = {
       ...PRODUCT_FORM,
       name,
@@ -9,7 +9,7 @@ export default function createProductForm([name, price, quantity, promotion]) {
       normalQuantity: Number(quantity),
     };
   }
-  if (promotion !== "null") {
+  if (!promotion.includes("null")) {
     productForm = {
       ...PRODUCT_FORM,
       name,

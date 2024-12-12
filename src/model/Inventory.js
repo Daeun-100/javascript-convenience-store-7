@@ -1,7 +1,7 @@
-import { PRODUCT_FORM } from "../Constants";
-import createProductForm from "../util/createProductForm";
-import mergeProductForm from "../util/mergeProductForm";
-import Product from "./Product";
+import createProductForm from "../util/createProductForm.js";
+import mergeProductForm from "../util/mergeProductForm.js";
+import Product from "./Product.js";
+
 export default class Inventory {
   #products;
   constructor(fileText) {
@@ -9,12 +9,14 @@ export default class Inventory {
       this.createProductsFormArr(fileText)
     );
   }
-
+  toPrintString() {
+    return this.#products.map((product) => product.toPrintString());
+  }
   createProductsFormArr(fileText) {
     const textArr = fileText.split("\n");
     const productsFormArr = [];
 
-    for (let i = 1; i < textArr.length; i++) {
+    for (let i = 1; i < textArr.length - 1; i++) {
       const textLine = textArr[i];
       const [name, price, quantity, promotion] = textLine.split(",");
       let productForm = createProductForm([name, price, quantity, promotion]);
