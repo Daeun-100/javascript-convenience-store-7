@@ -1,3 +1,4 @@
+import quantityToString from "../util/quantityToString.js";
 export default class Product {
   #name;
   #price;
@@ -18,13 +19,13 @@ export default class Product {
     return this.getPromotionString() + `\n` + this.getNormalString();
   }
   getPromotionString() {
-    return `${this.#name} ${this.#price.toLocaleString()}원 ${
+    return `${this.#name} ${this.#price.toLocaleString()}원 ${quantityToString(
       this.#promotionQuantity
-    }개 ${this.#promotion}`;
+    )} ${this.#promotion}`;
   }
   getNormalString() {
-    return `${this.#name} ${this.#price.toLocaleString()}원 ${
+    return `${this.#name} ${this.#price.toLocaleString()}원 ${quantityToString(
       this.#normalQuantity
-    }개`;
+    )}`;
   }
 }
