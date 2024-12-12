@@ -11,6 +11,7 @@ export default class Controller {
     const inventory = new Inventory(fileText);
     const stocksString = inventory.toPrintString();
     OutputView.printStock(stocksString);
+    InputHandler.handleOrder();
   }
   getFileText() {
     const fileHandler = new FileHandler();

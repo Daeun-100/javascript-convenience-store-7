@@ -20,4 +20,25 @@ export default class InputHandler {
       return await this.handleInput();
     }
   }
+  static async handleOrder() {
+    try {
+      const input = await InputView.order();
+      const orderForm = this.createOrderForm(input);
+      console.log(orderForm);
+      Validate.validateInput();
+
+      return input;
+    } catch (e) {
+      Console.print(e.message);
+      return await this.handleOrder();
+    }
+  }
+  static createOrderForm(orderText) {
+    return orderText
+      .split(",")
+      .map((productAndCount) => productAndCount.trim().slice(1, -1).split("-"))
+      .map(([name, quantity]) => {
+        return { name, quantity: Number(quantity) };
+      });
+  }
 }
