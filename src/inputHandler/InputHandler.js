@@ -1,3 +1,4 @@
+import Inventory from "../model/Inventory.js";
 import Validate from "../validate/Validate.js";
 import InputView from "../View/InputView.js";
 import { Console } from "@woowacourse/mission-utils";
@@ -20,17 +21,17 @@ export default class InputHandler {
       return await this.handleInput();
     }
   }
-  static async handleOrder() {
+  static async handleOrder(inventory) {
     try {
       const input = await InputView.order();
       const orderForm = this.createOrderForm(input);
-      console.log(orderForm);
-      Validate.validateInput();
 
-      return input;
+      Validate.isEnough(orderForm, inventory);
+
+      return orderForm;
     } catch (e) {
       Console.print(e.message);
-      return await this.handleOrder();
+      return await this.handleOrder(inventory);
     }
   }
   static createOrderForm(orderText) {

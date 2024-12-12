@@ -9,9 +9,13 @@ export default class Inventory {
       this.createProductsFormArr(fileText)
     );
   }
+  getProduct(name) {
+    return this.#products.find((product) => product.isNameSame(name));
+  }
   toPrintString() {
     return this.#products.map((product) => product.toPrintString());
   }
+
   createProductsFormArr(fileText) {
     const textArr = fileText.split("\n");
     const productsFormArr = [];
@@ -33,9 +37,11 @@ export default class Inventory {
     }
     return productsFormArr;
   }
+
   createProductsArr(productsFormArr) {
     return productsFormArr.map((form) => new Product(form));
   }
+
   get products() {
     return this.#products;
   }

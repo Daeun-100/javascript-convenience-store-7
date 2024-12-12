@@ -1,7 +1,7 @@
 export const PRODUCT_FORM = {
   name: null,
   price: null,
-  normalQuantity: null,
-  promotionQuantity: null,
+  normalQuantity: 0,
+  promotionQuantity: 0,
   promotion: null,
 };

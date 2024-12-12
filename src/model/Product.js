@@ -12,17 +12,31 @@ export default class Product {
     this.#promotionQuantity = promotionQuantity;
     this.#promotion = promotion;
   }
+
+  isNameSame(name) {
+    if (name === this.#name) return true;
+  }
+
+  isTotalQuantityEnough(quantity) {
+    if (this.#normalQuantity + this.#promotionQuantity < quantity) {
+      return false;
+    }
+    return true;
+  }
+
   toPrintString() {
     if (this.#promotion === null) {
       return this.getNormalString();
     }
     return this.getPromotionString() + `\n` + this.getNormalString();
   }
+
   getPromotionString() {
     return `${this.#name} ${this.#price.toLocaleString()}원 ${quantityToString(
       this.#promotionQuantity
     )} ${this.#promotion}`;
   }
+
   getNormalString() {
     return `${this.#name} ${this.#price.toLocaleString()}원 ${quantityToString(
       this.#normalQuantity

@@ -1,4 +1,5 @@
 import InputHandler from "../inputHandler/InputHandler.js";
+import Convenience from "../model/Convenience.js";
 import FileHandler from "../model/FileHandler.js";
 import Inventory from "../model/Inventory.js";
 import OutputView from "../view/OutputView.js";
@@ -11,7 +12,9 @@ export default class Controller {
     const inventory = new Inventory(fileText);
     const stocksString = inventory.toPrintString();
     OutputView.printStock(stocksString);
-    InputHandler.handleOrder();
+    const orders = await InputHandler.handleOrder(inventory);
+    console.log(orders);
+    const convenience = new Convenience(orders);
   }
   getFileText() {
     const fileHandler = new FileHandler();
