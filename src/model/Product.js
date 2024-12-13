@@ -34,7 +34,7 @@ export default class Product {
   getPromotionString() {
     return `${this.#name} ${this.#price.toLocaleString()}원 ${quantityToString(
       this.#promotionQuantity
-    )} ${this.#promotion}`;
+    )} ${this.#promotion.name}`;
   }
 
   getNormalString() {
