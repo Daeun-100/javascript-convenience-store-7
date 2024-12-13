@@ -36,7 +36,6 @@ export default class Convenience {
 
       this.#final.promotionDiscount += product.getPriceByQuantity(giftCount);
       this.#final.noPromotionPrice += product.getNoPromotionPrice(quantity);
-      console.log(this.#final);
     }
   }
 
@@ -85,11 +84,9 @@ export default class Convenience {
         noBenefitQuantity,
       });
       if (YorN === "N") {
-        console.log(this.#orders);
         this.#orders.find(({ name }) => name === name).quantity -=
           noBenefitQuantity;
       }
-      console.log(this.#orders);
     }
   }
 

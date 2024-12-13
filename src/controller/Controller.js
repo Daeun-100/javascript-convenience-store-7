@@ -32,8 +32,6 @@ export default class Controller {
     OutputView.printStock(stocksString);
     //주문받음음
     const orders = await InputHandler.handleOrder(inventory);
-    console.log(orders);
-    // [ { name: '사이다', quantity: 2 } ]
 
     const convenience = new Convenience(orders, inventory);
     await convenience.purchase();
