@@ -32,9 +32,9 @@ export default class InputHandler {
     }
   }
 
-  static async handleNoBenefit() {
+  static async handleNoBenefit({ name, noBenefitQuantity }) {
     try {
-      const input = await InputView.noBenefit();
+      const input = await InputView.noBenefit({ name, noBenefitQuantity });
 
       // Validate.isEnough(orderForm, inventory);
 

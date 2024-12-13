@@ -11,8 +11,8 @@ export const INPUT_MESSAGE = {
   getFree(product) {
     return `현재 ${product} 는 1개를 무료로 더 받을 수 있습니다. 추가하시겠습니까? (Y/N)`;
   },
-  noBenefit(product, count) {
-    return `현재 ${product} ${count}개는 1개는 프로모션 할인이 적용되지 않스비다. 그래도 구매하시겠습니까? (Y/N)`;
+  noBenefit({ name, noBenefitQuantity }) {
+    return `현재 ${name} ${noBenefitQuantity}개는 프로모션 할인이 적용되지 않습니다. 그래도 구매하시겠습니까? (Y/N)`;
   },
   membership: "멤버십 할인을 받으시겠습니까? (Y/N)",
   replay: "감사합니다. 구매하고 싶은 다른 상품이 있나요? (Y/N)",

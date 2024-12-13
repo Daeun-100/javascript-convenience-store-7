@@ -24,6 +24,25 @@ export default class Product {
     return true;
   }
 
+  isNoBenefit(quantity) {
+    if (
+      this.#promotion.isAvailable(new Date()) &&
+      quantity > this.#promotionQuantity
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+
+  getNoBenefitQuantity(quantity) {
+    //프로모션 적용 가능 개수
+    const availableQuantity =
+      Math.floor(this.#promotionQuantity / this.#promotion.getBuyGet()) *
+      this.#promotion.getBuyGet();
+    return quantity - availableQuantity;
+  }
+
   canGetFree(quantity) {
     if (
       this.#promotion.isAvailable(new Date()) &&

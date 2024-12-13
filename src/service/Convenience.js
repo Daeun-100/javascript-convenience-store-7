@@ -21,6 +21,7 @@ export default class Convenience {
   async loop() {
     for (let { name, quantity } of this.#orders) {
       await this.getFree({ name, quantity });
+      await this.noBenefit({ name, quantity });
     }
   }
 
@@ -29,11 +30,31 @@ export default class Convenience {
       const YorN = await InputHandler.handlegetFree(name);
       if (YorN === "Y") {
         //증정품한개 추가
-        console.log(this.#orders);
+
         this.#orders.find(({ name }) => name === name).quantity += 1;
-        console.log(this.#orders);
       }
     }
+  }
+  async noBenefit({ name, quantity }) {
+    if (this.isNoBenefit({ name, quantity })) {
+      const product = this.#inventory.getProduct(name);
+      const noBenefitQuantity = product.getNoBenefitQuantity(quantity);
+      const YorN = await InputHandler.handleNoBenefit({
+        name,
+        noBenefitQuantity,
+      });
+      if (YorN === "N") {
+        console.log(this.#orders);
+        this.#orders.find(({ name }) => name === name).quantity -=
+          noBenefitQuantity;
+      }
+      console.log(this.#orders);
+    }
+  }
+
+  isNoBenefit({ name, quantity }) {
+    const product = this.#inventory.getProduct(name);
+    return product.isNoBenefit(quantity);
   }
 
   canGetFree({ name, quantity }) {

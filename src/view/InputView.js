@@ -14,8 +14,10 @@ export default class InputView {
     return input;
   }
 
-  static async noBenefit() {
-    let input = await Console.readLineAsync(INPUT_MESSAGE.noBenefit);
+  static async noBenefit({ name, noBenefitQuantity }) {
+    let input = await Console.readLineAsync(
+      INPUT_MESSAGE.noBenefit({ name, noBenefitQuantity })
+    );
 
     return input;
   }

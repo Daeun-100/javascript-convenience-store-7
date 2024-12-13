@@ -13,6 +13,10 @@ export default class Promotion {
     this.#endDate = endDate;
   }
 
+  getBuyGet() {
+    return this.#buy + this.#get;
+  }
+
   isAvailable(date) {
     if (this.#startDate < date < this.#endDate) {
       return true;
@@ -35,6 +39,7 @@ export default class Promotion {
     }
     return false;
   }
+
   get name() {
     return this.#name;
   }
