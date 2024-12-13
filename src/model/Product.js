@@ -24,6 +24,24 @@ export default class Product {
     return true;
   }
 
+  canGetFree(quantity) {
+    if (
+      this.#promotion.isAvailable(new Date()) &&
+      this.isEnoughGetFree(quantity) &&
+      this.#promotion.canGetFree(quantity)
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  isEnoughGetFree(quantity) {
+    if (this.#promotionQuantity >= quantity + 1) {
+      return true;
+    }
+    return false;
+  }
+
   toPrintString() {
     if (this.#promotion === null) {
       return this.getNormalString();

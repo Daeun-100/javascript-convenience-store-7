@@ -8,8 +8,8 @@ export default class InputView {
     return input;
   }
 
-  static async getFree() {
-    let input = await Console.readLineAsync(INPUT_MESSAGE.getFree);
+  static async getFree(name) {
+    let input = await Console.readLineAsync(INPUT_MESSAGE.getFree(name));
 
     return input;
   }

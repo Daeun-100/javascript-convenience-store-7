@@ -19,16 +19,16 @@ export default class InputHandler {
     }
   }
 
-  static async handlegetFree() {
+  static async handlegetFree(name) {
     try {
-      const input = await InputView.getFree();
+      const input = await InputView.getFree(name);
 
       // Validate.isEnough(orderForm, inventory);
 
       return input;
     } catch (e) {
       Console.print(e.message);
-      return await this.handlegetFree();
+      return await this.handlegetFree(name);
     }
   }
 
