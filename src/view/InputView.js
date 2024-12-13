@@ -1,5 +1,5 @@
 import { Console } from "@woowacourse/mission-utils";
-import { INPUT_MESSAGE } from "../Constants";
+import { INPUT_MESSAGE } from "../Constants.js";
 
 export default class InputView {
   static async order() {

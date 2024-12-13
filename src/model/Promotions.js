@@ -1,10 +1,8 @@
 import Promotion from "./Promotion.js";
 export default class Promotions {
   #promotions;
-  constructor(textFile) {
-    this.#promotions = this.createPromotionsArr(
-      this.createPromotionsFormArr(textFile)
-    );
+  constructor(promotionsFormArr) {
+    this.#promotions = this.createPromotionsArr(promotionsFormArr);
   }
 
   match(name) {
@@ -17,19 +15,5 @@ export default class Promotions {
 
   createPromotionsArr(arr) {
     return arr.map((form) => new Promotion(form));
-  }
-
-  createPromotionsFormArr(fileText) {
-    const textArr = fileText.split("\n");
-    const promotionsFormArr = [];
-
-    for (let i = 1; i < textArr.length - 1; i++) {
-      const textLine = textArr[i];
-      const [name, buy, get, startDate, endDate] = textLine.split(",");
-      const form = { name, buy, get, startDate, endDate: endDate.trim() };
-      promotionsFormArr.push(form);
-    }
-
-    return promotionsFormArr;
   }
 }
