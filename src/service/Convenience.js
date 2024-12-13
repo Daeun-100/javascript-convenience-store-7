@@ -23,6 +23,14 @@ export default class Convenience {
       await this.getFree({ name, quantity });
       await this.noBenefit({ name, quantity });
     }
+    this.buy();
+  }
+
+  buy() {
+    for (let { name, quantity } of this.#orders) {
+      const product = this.#inventory.getProduct(name);
+      product.buy(quantity);
+    }
   }
 
   async getFree({ name, quantity }) {
@@ -60,5 +68,11 @@ export default class Convenience {
   canGetFree({ name, quantity }) {
     const product = this.#inventory.getProduct(name);
     return product.canGetFree(quantity);
+  }
+
+  async membership() {
+    const YorN = await InputHandler.handleMembership();
+    if (YorN === "Y") {
+    }
   }
 }

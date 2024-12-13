@@ -17,6 +17,17 @@ export default class Product {
     if (name === this.#name) return true;
   }
 
+  buy(quantity) {
+    let restQuantity = quantity;
+    if (this.#promotionQuantity >= quantity) {
+      this.#promotionQuantity -= quantity;
+      return;
+    }
+    restQuantity -= this.#promotionQuantity;
+    this.#promotionQuantity = 0;
+    this.#normalQuantity -= restQuantity;
+  }
+
   isTotalQuantityEnough(quantity) {
     if (this.#normalQuantity + this.#promotionQuantity < quantity) {
       return false;
