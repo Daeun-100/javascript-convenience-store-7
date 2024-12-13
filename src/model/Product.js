@@ -54,9 +54,11 @@ export default class Product {
     const availableQuantity = this.getPromotionAvailableQuantity(quantity);
     return quantity - availableQuantity;
   }
+
   getNoPromotionPrice(quantity) {
     return this.getNoPromotionQuantity(quantity) * this.#price;
   }
+
   getPromotionAvailableQuantity(quantity) {
     if (quantity > this.#promotionQuantity) {
       return (
@@ -73,7 +75,9 @@ export default class Product {
     if (quantity < this.#promotionQuantity) {
       return quantity / this.#promotion.getBuyGet();
     }
-    this.getPromotionAvailableQuantity() / this.#promotion.getBuyGet();
+    return (
+      this.getPromotionAvailableQuantity(quantity) / this.#promotion.getBuyGet()
+    );
   }
 
   canGetFree(quantity) {

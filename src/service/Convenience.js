@@ -31,10 +31,7 @@ export default class Convenience {
       const giftCount = product.getGiftCount(quantity);
       this.#final.gift[name] = giftCount;
       this.#final.promotionDiscount += product.getPriceByQuantity(giftCount);
-      this.#final.noPromotionPrice += product.NoPromotionPrice(quantity);
-      this.#final.memgershipDiscount += this.getMembershipDiscount(
-        this.#final.noPromotionPrice
-      );
+      this.#final.noPromotionPrice += product.getNoPromotionPrice(quantity);
     }
   }
 
@@ -43,7 +40,7 @@ export default class Convenience {
     if (discountPrice > 8000) {
       discountPrice = 8000;
     }
-    return 8000;
+    return discountPrice;
   }
 
   async loop() {
@@ -51,8 +48,11 @@ export default class Convenience {
       await this.getFree({ name, quantity });
       await this.noBenefit({ name, quantity });
     }
-    await this.membership();
 
+    this.orderInfo();
+
+    await this.membership();
+    console.log(this.#final);
     this.buy();
   }
 
@@ -101,6 +101,9 @@ export default class Convenience {
   async membership() {
     const YorN = await InputHandler.handleMembership();
     if (YorN === "Y") {
+      this.#final.memgershipDiscount += this.getMembershipDiscount(
+        this.#final.noPromotionPrice
+      );
     }
   }
 }
