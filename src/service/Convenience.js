@@ -22,6 +22,7 @@ export default class Convenience {
       //내실돈
     };
   }
+
   orderInfo() {
     for (let { name, quantity } of this.#orders) {
       const product = this.#inventory.getProduct(name);
@@ -31,7 +32,18 @@ export default class Convenience {
       this.#final.gift[name] = giftCount;
       this.#final.promotionDiscount += product.getPriceByQuantity(giftCount);
       this.#final.noPromotionPrice += product.NoPromotionPrice(quantity);
+      this.#final.memgershipDiscount += this.getMembershipDiscount(
+        this.#final.noPromotionPrice
+      );
     }
+  }
+
+  getMembershipDiscount(price) {
+    let discountPrice = price * 0.3;
+    if (discountPrice > 8000) {
+      discountPrice = 8000;
+    }
+    return 8000;
   }
 
   async loop() {
