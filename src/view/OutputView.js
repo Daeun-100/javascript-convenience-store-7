@@ -8,4 +8,29 @@ export default class OutputView {
   static printStock(stocksArr) {
     stocksArr.forEach((productString) => Console.print(productString));
   }
+  static printReciept({
+    orders,
+    totalPrice,
+    gift,
+    promotionDiscount,
+    memgershipDiscount,
+  }) {
+    Console.print("-----편의점-----");
+    const ordersArr = Object.entries(orders);
+    Console.print("상품명" + " " + "수량");
+    ordersArr.forEach(([name, quantity]) => {
+      Console.print(name + " " + quantity + "개");
+    });
+    Console.print("-----증정-----");
+    const giftArr = Object.entries(gift);
+    giftArr.forEach(([name, quantity]) => {
+      Console.print(name + " " + quantity + "개");
+    });
+    Console.print("-----------");
+    Console.print("총구매액" + " " + totalPrice);
+    Console.print("행사할인" + " -" + promotionDiscount);
+    Console.print("멤버십할인" + " -" + memgershipDiscount);
+    const finalAmount = totalPrice - promotionDiscount - memgershipDiscount;
+    Console.print("내실돈" + " " + finalAmount);
+  }
 }

@@ -1,4 +1,5 @@
 import InputHandler from "../inputHandler/InputHandler.js";
+import OutputView from "../view/OutputView.js";
 
 export default class Convenience {
   //[{name:감자침 , count:2}]
@@ -10,6 +11,7 @@ export default class Convenience {
     this.#inventory = inventory;
     this.#final = {
       //구매한 상품 정보
+      orders: {},
       //총구매액
       totalPrice: 0,
       //증정품 개수
@@ -23,15 +25,18 @@ export default class Convenience {
     };
   }
 
-  orderInfo() {
+  saveOrderInfo() {
     for (let { name, quantity } of this.#orders) {
+      this.#final.orders[name] = quantity;
       const product = this.#inventory.getProduct(name);
       const price = product.getPriceByQuantity(quantity);
       this.#final.totalPrice += price;
       const giftCount = product.getGiftCount(quantity);
-      this.#final.gift[name] = giftCount;
+      if (giftCount !== 0) this.#final.gift[name] = giftCount;
+
       this.#final.promotionDiscount += product.getPriceByQuantity(giftCount);
       this.#final.noPromotionPrice += product.getNoPromotionPrice(quantity);
+      console.log(this.#final);
     }
   }
 
@@ -43,17 +48,17 @@ export default class Convenience {
     return discountPrice;
   }
 
-  async loop() {
+  async purchase() {
     for (let { name, quantity } of this.#orders) {
       await this.getFree({ name, quantity });
       await this.noBenefit({ name, quantity });
     }
 
-    this.orderInfo();
+    this.saveOrderInfo();
 
     await this.membership();
-    console.log(this.#final);
     this.buy();
+    OutputView.printReciept(this.#final);
   }
 
   buy() {

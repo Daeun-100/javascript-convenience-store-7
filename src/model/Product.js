@@ -52,6 +52,7 @@ export default class Product {
 
   getNoPromotionQuantity(quantity) {
     const availableQuantity = this.getPromotionAvailableQuantity(quantity);
+    console.log(`프로모션 적용 양 : ${availableQuantity}`);
     return quantity - availableQuantity;
   }
 
@@ -60,6 +61,9 @@ export default class Product {
   }
 
   getPromotionAvailableQuantity(quantity) {
+    if (quantity < this.#promotion.getBuyGet()) {
+      return 0;
+    }
     if (quantity > this.#promotionQuantity) {
       return (
         Math.floor(this.#promotionQuantity / this.#promotion.getBuyGet()) *
@@ -72,6 +76,9 @@ export default class Product {
   }
 
   getGiftCount(quantity) {
+    if (quantity < this.#promotion.getBuyGet()) {
+      return 0;
+    }
     if (quantity < this.#promotionQuantity) {
       return quantity / this.#promotion.getBuyGet();
     }

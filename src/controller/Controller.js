@@ -36,7 +36,7 @@ export default class Controller {
     // [ { name: '사이다', quantity: 2 } ]
 
     const convenience = new Convenience(orders, inventory);
-    await convenience.loop();
+    await convenience.purchase();
 
     const isReplay = await InputHandler.handleReplay();
     if (isReplay === "Y") {
