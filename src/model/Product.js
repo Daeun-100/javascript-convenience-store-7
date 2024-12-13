@@ -50,16 +50,22 @@ export default class Product {
     return false;
   }
 
-  getNoBenefitQuantity(quantity) {
-    //프로모션 적용 가능 개수, quantity가 프로모션 개수보다 클때때
-    const availableQuantity = this.getPromotionAvailableQuantity();
+  getNoPromotionQuantity(quantity) {
+    const availableQuantity = this.getPromotionAvailableQuantity(quantity);
     return quantity - availableQuantity;
   }
-
-  getPromotionAvailableQuantity() {
-    return (
-      Math.floor(this.#promotionQuantity / this.#promotion.getBuyGet()) *
-      this.#promotion.getBuyGet()
+  getNoPromotionPrice(quantity) {
+    return this.getNoPromotionQuantity(quantity) * this.#price;
+  }
+  getPromotionAvailableQuantity(quantity) {
+    if (quantity > this.#promotionQuantity) {
+      return (
+        Math.floor(this.#promotionQuantity / this.#promotion.getBuyGet()) *
+        this.#promotion.getBuyGet()
+      );
+    }
+    return Math.floor(
+      (quantity / this.#promotion.getBuyGet()) * this.#promotion.getBuyGet()
     );
   }
 

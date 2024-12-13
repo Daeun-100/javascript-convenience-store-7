@@ -9,14 +9,16 @@ export default class Convenience {
     this.#orders = orders;
     this.#inventory = inventory;
     this.#final = {
-      totalPrice: 0,
       //구매한 상품 정보
+      //총구매액
+      totalPrice: 0,
       //증정품 개수
       gift: {},
-      //총구매액
       //행사할인
-      promotionDiscount:
+      promotionDiscount: 0,
+      noPromotionPrice: 0,
       //몜버십할인
+      memgershipDiscount: 0,
       //내실돈
     };
   }
@@ -27,7 +29,8 @@ export default class Convenience {
       this.#final.totalPrice += price;
       const giftCount = product.getGiftCount(quantity);
       this.#final.gift[name] = giftCount;
-      this.#final.promotionDiscount += product.getPriceByQuantity(giftCount)
+      this.#final.promotionDiscount += product.getPriceByQuantity(giftCount);
+      this.#final.noPromotionPrice += product.NoPromotionPrice(quantity);
     }
   }
 
@@ -59,7 +62,7 @@ export default class Convenience {
   async noBenefit({ name, quantity }) {
     if (this.isNoBenefit({ name, quantity })) {
       const product = this.#inventory.getProduct(name);
-      const noBenefitQuantity = product.getNoBenefitQuantity(quantity);
+      const noBenefitQuantity = product.getNoPromotionQuantity(quantity);
       const YorN = await InputHandler.handleNoBenefit({
         name,
         noBenefitQuantity,
