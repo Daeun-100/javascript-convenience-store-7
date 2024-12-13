@@ -23,6 +23,10 @@ export default class Controller {
       }
     );
     const inventory = new Inventory(productsFormarr);
+    this.loop(inventory);
+  }
+
+  async loop(inventory) {
     //출력력
     const stocksString = inventory.toPrintString();
     OutputView.printStock(stocksString);
@@ -33,5 +37,10 @@ export default class Controller {
 
     const convenience = new Convenience(orders, inventory);
     await convenience.loop();
+
+    const isReplay = await InputHandler.handleReplay();
+    if (isReplay === "Y") {
+      await this.loop(inventory);
+    }
   }
 }

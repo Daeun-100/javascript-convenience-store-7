@@ -23,6 +23,8 @@ export default class Convenience {
       await this.getFree({ name, quantity });
       await this.noBenefit({ name, quantity });
     }
+    await this.membership();
+
     this.buy();
   }
 
