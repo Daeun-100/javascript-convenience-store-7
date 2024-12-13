@@ -9,13 +9,26 @@ export default class Convenience {
     this.#orders = orders;
     this.#inventory = inventory;
     this.#final = {
+      totalPrice: 0,
       //구매한 상품 정보
       //증정품 개수
+      gift: {},
       //총구매액
       //행사할인
+      promotionDiscount:
       //몜버십할인
       //내실돈
     };
+  }
+  orderInfo() {
+    for (let { name, quantity } of this.#orders) {
+      const product = this.#inventory.getProduct(name);
+      const price = product.getPriceByQuantity(quantity);
+      this.#final.totalPrice += price;
+      const giftCount = product.getGiftCount(quantity);
+      this.#final.gift[name] = giftCount;
+      this.#final.promotionDiscount += product.getPriceByQuantity(giftCount)
+    }
   }
 
   async loop() {
@@ -39,8 +52,6 @@ export default class Convenience {
     if (this.canGetFree({ name, quantity })) {
       const YorN = await InputHandler.handlegetFree(name);
       if (YorN === "Y") {
-        //증정품한개 추가
-
         this.#orders.find(({ name }) => name === name).quantity += 1;
       }
     }

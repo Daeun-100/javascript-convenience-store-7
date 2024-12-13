@@ -28,6 +28,10 @@ export default class Product {
     this.#normalQuantity -= restQuantity;
   }
 
+  getPriceByQuantity(quantity) {
+    return this.#price * quantity;
+  }
+
   isTotalQuantityEnough(quantity) {
     if (this.#normalQuantity + this.#promotionQuantity < quantity) {
       return false;
@@ -47,11 +51,23 @@ export default class Product {
   }
 
   getNoBenefitQuantity(quantity) {
-    //프로모션 적용 가능 개수
-    const availableQuantity =
-      Math.floor(this.#promotionQuantity / this.#promotion.getBuyGet()) *
-      this.#promotion.getBuyGet();
+    //프로모션 적용 가능 개수, quantity가 프로모션 개수보다 클때때
+    const availableQuantity = this.getPromotionAvailableQuantity();
     return quantity - availableQuantity;
+  }
+
+  getPromotionAvailableQuantity() {
+    return (
+      Math.floor(this.#promotionQuantity / this.#promotion.getBuyGet()) *
+      this.#promotion.getBuyGet()
+    );
+  }
+
+  getGiftCount(quantity) {
+    if (quantity < this.#promotionQuantity) {
+      return quantity / this.#promotion.getBuyGet();
+    }
+    this.getPromotionAvailableQuantity() / this.#promotion.getBuyGet();
   }
 
   canGetFree(quantity) {
