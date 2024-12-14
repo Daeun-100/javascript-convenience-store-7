@@ -12,7 +12,7 @@ export default class Controller {
   constructor() {}
 
   async play() {
-    //md파일가공공
+    //md파일가공
     const productsFileText = getFileText("products.md");
     const promotionsFileText = getFileText("promotions.md");
 
@@ -22,15 +22,16 @@ export default class Controller {
         return { ...rest, promotion: promotions.match(promotion) };
       }
     );
+
     const inventory = new Inventory(productsFormarr);
-    this.loop(inventory);
+    await this.loop(inventory);
   }
 
   async loop(inventory) {
-    //출력력
+    //출력
     const stocksString = inventory.toPrintString();
     OutputView.printStock(stocksString);
-    //주문받음음
+    //주문받음
     const orders = await InputHandler.handleOrder(inventory);
 
     const convenience = new Convenience(orders, inventory);

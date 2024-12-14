@@ -9,9 +9,10 @@ export default class InputHandler {
     try {
       const input = await InputView.order();
       const orderForm = this.createOrderForm(input);
+      console.log(orderForm);
 
+      Validate.has(orderForm, inventory);
       Validate.isEnough(orderForm, inventory);
-
       return orderForm;
     } catch (e) {
       Console.print(e.message);
@@ -74,7 +75,10 @@ export default class InputHandler {
   static createOrderForm(orderText) {
     return orderText
       .split(",")
-      .map((productAndCount) => productAndCount.trim().slice(1, -1).split("-"))
+      .map((productAndCount) => {
+        const string = productAndCount.trim().replace("[", "").replace("]", "");
+        return string.split("-");
+      })
       .map(([name, quantity]) => {
         return { name, quantity: Number(quantity) };
       });

@@ -41,6 +41,7 @@ export default class Product {
 
   isNoBenefit(quantity) {
     if (
+      this.#promotion &&
       this.#promotion.isAvailable(new Date()) &&
       quantity > this.#promotionQuantity
     ) {
@@ -52,7 +53,6 @@ export default class Product {
 
   getNoPromotionQuantity(quantity) {
     const availableQuantity = this.getPromotionAvailableQuantity(quantity);
-    console.log(`프로모션 적용 양 : ${availableQuantity}`);
     return quantity - availableQuantity;
   }
 
@@ -61,6 +61,9 @@ export default class Product {
   }
 
   getPromotionAvailableQuantity(quantity) {
+    if (!this.#promotion) {
+      return 0;
+    }
     if (quantity < this.#promotion.getBuyGet()) {
       return 0;
     }
@@ -76,6 +79,9 @@ export default class Product {
   }
 
   getGiftCount(quantity) {
+    if (!this.#promotion) {
+      return 0;
+    }
     if (quantity < this.#promotion.getBuyGet()) {
       return 0;
     }
@@ -89,6 +95,7 @@ export default class Product {
 
   canGetFree(quantity) {
     if (
+      this.#promotion &&
       this.#promotion.isAvailable(new Date()) &&
       this.isEnoughGetFree(quantity) &&
       this.#promotion.canGetFree(quantity)
@@ -113,13 +120,17 @@ export default class Product {
   }
 
   getPromotionString() {
-    return `${this.#name} ${this.#price.toLocaleString()}원 ${quantityToString(
+    return `- ${
+      this.#name
+    } ${this.#price.toLocaleString()}원 ${quantityToString(
       this.#promotionQuantity
     )} ${this.#promotion.name}`;
   }
 
   getNormalString() {
-    return `${this.#name} ${this.#price.toLocaleString()}원 ${quantityToString(
+    return `- ${
+      this.#name
+    } ${this.#price.toLocaleString()}원 ${quantityToString(
       this.#normalQuantity
     )}`;
   }
